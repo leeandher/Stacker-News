@@ -1,0 +1,11 @@
+{
+  "name": "stacker-news-server",
+  "version": "1.0.0",
+  "description": "A GraphQL Server made with Prisma and GraphQL Yoga",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql-yoga": "^1.16.9"
+  }
+}
