@@ -11,18 +11,27 @@ let links = [
 let idCount = links.length;
 const resolvers = {
   Query: {
-    info: () => null,
-    feed: () => links
+    // Test
+    info: () => "This is a GraphQL API",
+    // View all link
+    feed: () => links,
+    // Get a link by ID
+    link: (parent, { id }) => links.find(el => el.id === id)
   },
   Mutation: {
-    post: (parent, args) => {
+    // Post a link
+    postLink: (parent, { url, description }) => {
       const link = {
         id: `link-${idCount++}`,
-        description: args.description,
-        url: args.url
+        url: url,
+        description: description
       };
       links.push(link);
       return link;
+    },
+
+    updateLink: (parent, { url, description }) => {
+      return null;
     }
   }
 };
