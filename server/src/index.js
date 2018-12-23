@@ -30,8 +30,25 @@ const resolvers = {
       return link;
     },
 
-    updateLink: (parent, { url, description }) => {
-      return null;
+    // Update a posted link
+    updateLink: (parent, { id, url, description }) => {
+      const linkIndex = links.findIndex(el => el.id === id);
+      if (linkIndex >= 0) {
+        if (url) links[linkIndex].url = url;
+        if (description) links[linkIndex].description = description;
+      }
+      return links[linkIndex];
+    },
+
+    // Delete a posted link
+    deleteLink: (parent, { id }) => {
+      const linkIndex = links.findIndex(el => el.id === id);
+      let link;
+      if (linkIndex >= 0) {
+        link = links[linkIndex];
+        links.splice(linkIndex, 1);
+      }
+      return link;
     }
   }
 };
