@@ -1,6 +1,9 @@
 type Query {
   info: String!
+  # Get a list of every link
   feed: [Link!]
+
+  # Get an individual link
   link(id: ID!): Link
 }
 
@@ -13,10 +16,23 @@ type Mutation {
 
   # Delete a link
   delete(id: ID!): Link
+
+  # Sign up as a new user
+  signup(email: String!, password: String!, name: String!): AuthPayload
+
+  # Log in as an existing user
+  login(email: String!, password: String!): AuthPayload
 }
 
 type Link {
   id: ID!
   description: String!
   url: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  links: [Link!]!
 }
