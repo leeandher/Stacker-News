@@ -2,6 +2,7 @@
 
 # prisma
 prisma.yml
+generated/
 
 # dependencies
 node_modules/
