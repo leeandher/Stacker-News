@@ -1,5 +1,7 @@
 type Query {
+  # Provide info about the API
   info: String!
+
   # Get a list of every link
   feed: [Link!]
 
@@ -24,10 +26,13 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
 }
 
+# Type definitions
+
 type Link {
   id: ID!
   description: String!
   url: String!
+  postedBy: User
 }
 
 type User {
@@ -35,4 +40,9 @@ type User {
   name: String!
   email: String!
   links: [Link!]!
+}
+
+type AuthPayload {
+  token: String
+  user: User
 }
