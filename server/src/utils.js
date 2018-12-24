@@ -1,5 +1,7 @@
+require("dotenv").config({ path: "../settings.env" });
 const jwt = require("jsonwebtoken");
-const APP_SECRET = "GraphQL-is-aw3some";
+
+const { APP_SECRET } = process.env;
 
 const getUserId = context => {
   const Authorization = context.request.get("Authorization");
