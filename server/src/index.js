@@ -1,4 +1,5 @@
 // Import the dependencies
+require("dotenv").config({ path: "settings.env" });
 const { GraphQLServer } = require("graphql-yoga");
 const { prisma } = require("./generated/prisma-client");
 

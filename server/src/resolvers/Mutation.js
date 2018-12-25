@@ -1,11 +1,11 @@
 // Get environment variables
-require("dotenv").config("../../settings.env");
 
 // Get packages
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { getUserId } = require("../utils");
 
+console.log(process.env.APP_SECRET);
 // Link Management
 
 const post = (root, { url, description }, context) => {

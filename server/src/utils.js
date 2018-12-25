@@ -1,10 +1,7 @@
-// Get environment variables
-require("dotenv").config({ path: "../settings.env" });
-
 // Get packages
 const jwt = require("jsonwebtoken");
 
-export const getUserId = context => {
+const getUserId = context => {
   const Authorization = context.request.get("Authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
@@ -12,4 +9,8 @@ export const getUserId = context => {
     return userId;
   }
   throw new Error("Not authenticated");
+};
+
+module.exports = {
+  getUserId
 };
