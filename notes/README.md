@@ -1,15 +1,33 @@
 # How to GraphQL
 
-## Node.js
+This directory contains notes pertaining to different courses provided by [How To GraphQL](https://www.howtographql.com/). Each tutorial/course has its own directory, but there are some fundamental basics to developing with GraphQL (regardless of whether or not the tech is front-end or back-end).
 
-A few things I picked up while working my way through the [How To GraphQL](https://www.howtographql.com/) tutorial for backend JavaScript. You can check out the same tutorial over [here](https://www.howtographql.com/graphql-js/0-introduction/). 
+## What is GraphQL
 
-_These notes are written as I go through the course, and might have information that is wrong or outdated. Simply put, I'm still learning!_
+It may sound confusing, but GraphQL is actually just a new type of API standard. It was invented and open-sourced by Facebook. It functions similarly to a RESTful API, however it only exposes one  endpoint and responds to declarative data fetching via queries.
 
----
+Lots of words there, but it's actually not too complicated, and best understood through an example.
 
-## The Stack
+Say we had a link-sharing website with multiple users, and their friends (and their links). If we wanted a user's name, their top 3 friends and top 3 links, instictively we'd just hit up each endpoint for all their data. This would get our ENTIRE user object, their ENTIRE friends list, and their ENTIRE link history.
 
-### GraphQL Yoga
+This is a common problem with REST endpoints: overfetching/underfetching data. We can solve this through a refactoring of the API, but this takes time, and can get messy quick.
 
-GraphQL Yoga is a fully-featured GraphQL server, based on Express.js (and a few other helpful libraries). Since we 
+Instead we use GraphQL.
+
+GraphQL will let the front-end developer outline exactly the data they'd like from the server as a _query_. This query designs the entire JSON data object, and tells the endpoint to only provide this explicit data. A pseudo-code query would look like this:
+
+```graphql
+query {
+  User(id: "11619258") {
+    name
+    links(last: 3) {
+      title
+    }
+    friends(last: 3) {
+      name
+    }
+  }
+}
+```
+and bam! We'd only get the info we need, not the id's of the friends, or the number of clicks on each link. We've trimmed the fluff.
+
