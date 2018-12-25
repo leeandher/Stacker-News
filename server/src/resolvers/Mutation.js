@@ -8,11 +8,18 @@ const { getUserId } = require("../utils");
 
 // Link Management
 
-const post = (root, { url, description }, context) =>
-  context.prisma.createLink({
+const post = (root, { url, description }, context) => {
+  const userId = getUserId(context);
+  return context.prisma.createLink({
     url,
-    description
+    description,
+    postedBy: {
+      connect: {
+        id: userId
+      }
+    }
   });
+};
 
 const updateLink = (root, { id, url, description }, context) =>
   context.prisma.updateLink({
