@@ -27,7 +27,7 @@ const resolvers = {
       });
     }
 
-    // /* TODO: Refactor for Prisma Client
+    /* TODO: Refactor for Prisma Client
 
     // Update a posted link
     update: (root, { id, url, description }) => {
@@ -50,7 +50,7 @@ const resolvers = {
       return link;
     }
 
-    // */
+    */
   }
 };
 

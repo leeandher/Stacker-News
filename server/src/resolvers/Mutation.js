@@ -1,3 +1,11 @@
+// Get environment variables
+require("dotenv").config("../../settings.env");
+
+// Get packages
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const { getUserId } = require("../utils");
+
 // Link Management
 
 const post = (root, { url, description }, context) =>
@@ -31,7 +39,7 @@ const signup = async (parent, args, context, info) => {
   });
 
   // JWT Auth
-  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
   return {
     token,
     user
@@ -48,7 +56,7 @@ const login = async (parent, args, context, info) => {
   if (!valid) throw new Error("Invalid password");
 
   // JWT Auth
-  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
   return {
     token,
@@ -59,5 +67,7 @@ const login = async (parent, args, context, info) => {
 module.exports = {
   post,
   updateLink,
-  deleteLink
+  deleteLink,
+  signup,
+  login
 };
