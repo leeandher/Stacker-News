@@ -1,6 +1,7 @@
 // Get packages
 const jwt = require("jsonwebtoken");
 
+// Return the userId in the Authentication header if present
 const getUserId = context => {
   const Authorization = context.request.get("Authorization");
   if (Authorization) {

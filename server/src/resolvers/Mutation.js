@@ -1,12 +1,9 @@
-// Get environment variables
-
 // Get packages
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { getUserId } = require("../utils");
 
-console.log(process.env.APP_SECRET);
-// Link Management
+// Link management
 
 const post = (root, { url, description }, context) => {
   const userId = getUserId(context);
@@ -47,6 +44,8 @@ const signup = async (parent, args, context, info) => {
 
   // JWT Auth
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+
+  // Return an object in the same structure as the AuthPayload in schema.graphql
   return {
     token,
     user
@@ -54,7 +53,7 @@ const signup = async (parent, args, context, info) => {
 };
 
 const login = async (parent, args, context, info) => {
-  // Validate user
+  // Find the user
   const user = await context.prisma.user({ email: args.email });
   if (!user) throw new Error("No such user found");
 
@@ -65,6 +64,7 @@ const login = async (parent, args, context, info) => {
   // JWT Auth
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
+  // Return an object in the same structure as the AuthPayload in schema.graphql
   return {
     token,
     user
