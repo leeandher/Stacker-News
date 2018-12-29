@@ -1,4 +1,4 @@
-# This file contains all of out type defintions
+# This file contains all of our type defintions
 
 type Query {
   # Provide info about the API
@@ -28,10 +28,15 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
 }
 
+type Subscription {
+  newLink: Link
+}
+
 # Type definitions
 
 type Link {
   id: ID!
+  createdAt: DateTime!
   description: String!
   url: String!
   postedBy: User
@@ -41,6 +46,7 @@ type User {
   id: ID!
   name: String!
   email: String!
+  password: String!
   links: [Link!]!
 }
 
