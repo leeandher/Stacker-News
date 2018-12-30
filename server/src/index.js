@@ -1,30 +1,39 @@
 // Import the dependencies
 require("dotenv").config({ path: "settings.env" });
 const { GraphQLServer } = require("graphql-yoga");
-const { prisma } = require("./generated/prisma-client");
 
 // Import the resolvers
-const Query = require("./resolvers/Query");
-const Mutation = require("./resolvers/Mutation");
-const Subscription = require("./resolvers/Subscription");
-const User = require("./resolvers/User");
-const Link = require("./resolvers/Link");
 
+let links = [
+  {
+    id: "link-0",
+    url: "www.howtographql.com",
+    description: "Fullstack tutorial for GraphQL"
+  }
+];
+let idCount = links.length;
 const resolvers = {
-  Query,
-  Mutation,
-  Subscription,
-  User,
-  Link
+  Query: {
+    info: () => `This is an API of StackerNews, a HackerNews clone`,
+    feed: () => links
+  },
+  Mutation: {
+    // 2
+    post: (parent, args) => {
+      const link = {
+        id: `link-${idCount++}`,
+        description: args.description,
+        url: args.url
+      };
+      links.push(link);
+      return link;
+    }
+  }
 };
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
-  resolvers,
-  context: request => ({
-    ...request,
-    prisma
-  })
+  resolvers
 });
 
 server.start(() => console.log(`Server is running on http://localhost:4000`));
