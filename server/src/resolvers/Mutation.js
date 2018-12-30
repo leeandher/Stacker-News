@@ -7,6 +7,7 @@ const { getUserId } = require("../utils");
 
 const post = (root, { url, description }, context) => {
   const userId = getUserId(context);
+  console.log(userId);
   return context.prisma.createLink({
     url,
     description,

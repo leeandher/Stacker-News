@@ -3,7 +3,7 @@ type Link {
   createdAt: DateTime!
   description: String!
   url: String!
-  postedBy: User
+  postedBy: User!
 }
 
 type User {

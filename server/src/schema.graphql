@@ -6,9 +6,6 @@ type Query {
 
   # Get a list of every link
   feed: [Link!]
-
-  # Get an individual link
-  link(id: ID!): Link
 }
 
 type Mutation {
@@ -36,10 +33,9 @@ type Subscription {
 
 type Link {
   id: ID!
-  createdAt: DateTime!
   description: String!
   url: String!
-  postedBy: User
+  postedBy: User!
 }
 
 type User {
