@@ -4,7 +4,7 @@
 *.env
 
 # prisma
-server/prisma.yml
+prisma.yml
 generated/
 
 # dependencies
