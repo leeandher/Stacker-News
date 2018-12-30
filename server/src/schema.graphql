@@ -5,7 +5,7 @@ type Query {
   info: String!
 
   # Get a list of every link
-  feed: [Link!]
+  # feed: [Link!]
 }
 
 type Mutation {
@@ -13,10 +13,10 @@ type Mutation {
   post(url: String!, description: String!): Link!
 
   # Update a link
-  updateLink(id: ID!, url: String, description: String): Link
+  # updateLink(id: ID!, url: String, description: String): Link
 
   # Delete a link
-  deleteLink(id: ID!): Link
+  # deleteLink(id: ID!): Link
 
   # Sign up as a new user
   signup(email: String!, password: String!, name: String!): AuthPayload
@@ -29,14 +29,12 @@ type Subscription {
   newLink: Link
 }
 
-# Type definitions
-
-type Link {
-  id: ID!
-  description: String!
-  url: String!
-  postedBy: User!
+type AuthPayload {
+  token: String
+  user: User
 }
+
+# Type definitions
 
 type User {
   id: ID!
@@ -46,7 +44,9 @@ type User {
   links: [Link!]!
 }
 
-type AuthPayload {
-  token: String
-  user: User
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+  postedBy: User!
 }
