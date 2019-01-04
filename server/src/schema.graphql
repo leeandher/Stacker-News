@@ -1,6 +1,11 @@
 type Query {
   info: String!
-  feed(filter: String, skip: Int, first: Int): [Link!]!
+  feed(
+    filter: String
+    skip: Int
+    first: Int
+    orderBy: LinkOrderByInput
+  ): [Link!]!
   user(userId: ID!): User
   link(linkId: ID!): Link
 }
@@ -37,6 +42,16 @@ type Link {
   url: String!
   postedBy: User
   votes: [Vote!]!
+}
+
+# Possible sorts for our links
+enum LinkOrderByInput {
+  description_ASC
+  description_DESC
+  url_ASC
+  url_DESC
+  createdAt_ASC
+  createdAt_DESC
 }
 
 type Vote {
