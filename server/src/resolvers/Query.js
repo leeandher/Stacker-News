@@ -12,7 +12,22 @@ const feed = async (
         OR: [{ description_contains: filter }, { url_contains: filter }]
       }
     : {};
-  return await context.prisma.links({ where, skip, first, orderBy });
+
+  // Gather all the sorted, filtered, paginated links
+  const links = await context.prisma.links({ where, skip, first, orderBy });
+
+  const count = await context.prisma
+    .linksConnection({
+      where
+    })
+    .aggregate()
+    .count();
+
+  // Modeled like the 'Feed' type from '../schema.graphql'
+  return {
+    links,
+    count
+  };
 };
 
 const user = (parent, { userId }, context, info) =>
