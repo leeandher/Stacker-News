@@ -1,3 +1,2 @@
-- make a query for a single link
 - update link queries
 - delete link queries

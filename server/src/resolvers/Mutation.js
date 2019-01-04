@@ -1,7 +1,7 @@
 // Get packages
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { getUserId } = require("../utils");
+const { getUserId, ensureLinkPoster } = require("../utils");
 
 // Authentication
 
@@ -46,9 +46,10 @@ const login = async (parent, args, context, info) => {
 
 // Link Management
 
-const post = (parent, { url, description }, context, info) => {
+const postLink = (parent, { url, description }, context, info) => {
   // Get the logged in user
   const userId = getUserId(context);
+
   // Create their link
   return context.prisma.createLink({
     url,
@@ -57,15 +58,41 @@ const post = (parent, { url, description }, context, info) => {
   });
 };
 
+const updateLink = async (
+  parent,
+  { linkId, url, description },
+  context,
+  info
+) => {
+  // Verify the logged in user as poster
+  await ensureLinkPoster(context, linkId);
+
+  // Update the existing link
+  return context.prisma.updateLink({
+    where: { id: linkId },
+    data: { url, description }
+  });
+};
+
+const deleteLink = async (parent, { linkId }, context, info) => {
+  // Verify the logged in user as poster
+  await ensureLinkPoster(context, linkId);
+
+  // Delete the link
+  return context.prisma.deleteLink({ id: linkId });
+};
+
+// Vote Management
+
 const vote = async (parent, { linkId }, context, info) => {
   // Get the logged in user
   const userId = getUserId(context);
   // Check that no link exists already
-  const linkExists = await context.prisma.$exists.vote({
+  const voteExists = await context.prisma.$exists.vote({
     user: { id: userId },
     link: { id: linkId }
   });
-  if (linkExists) throw new Error(`Already voted for link: ${linkId}`);
+  if (voteExists) throw new Error(`Already voted for link: ${linkId}`);
 
   // Connect this vote instance to the user and link
   return context.prisma.createVote({
@@ -77,6 +104,8 @@ const vote = async (parent, { linkId }, context, info) => {
 module.exports = {
   signup,
   login,
-  post,
+  postLink,
+  updateLink,
+  deleteLink,
   vote
 };
