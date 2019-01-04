@@ -1,7 +1,14 @@
 const info = () =>
   `This is a GraphQL Server powering the HackerNews clone: StackerNews!`;
 
-const feed = (parent, args, context, info) => context.prisma.links();
+const feed = async (parent, { filter }, context, info) => {
+  const where = filter
+    ? {
+        OR: [{ description_contains: filter }, { url_contains: filter }]
+      }
+    : {};
+  return await context.prisma.links({ where });
+};
 
 const user = (parent, { userId }, context, info) =>
   context.prisma.user({ id: userId });
