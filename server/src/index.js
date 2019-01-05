@@ -1,5 +1,5 @@
 // Set up the environment
-require("dotenv").config({ path: "../../settings.env" });
+require("dotenv").config({ path: `${__dirname}/../../settings.env` });
 
 // Import the dependencies
 const { GraphQLServer } = require("graphql-yoga");

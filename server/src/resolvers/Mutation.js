@@ -78,6 +78,11 @@ const deleteLink = async (parent, { linkId }, context, info) => {
   // Verify the logged in user as poster
   await ensureLinkPoster(context, linkId);
 
+  // Delete the associated votes
+  const linkVotes = await context.prisma.link({ id: linkId }).votes();
+  const linkIds = linkVotes.map(data => data.id);
+  await context.prisma.deleteManyVotes({ id_in: linkIds });
+
   // Delete the link
   return context.prisma.deleteLink({ id: linkId });
 };
