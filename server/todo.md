@@ -1,2 +1,0 @@
-- update link queries
-- delete link queries
