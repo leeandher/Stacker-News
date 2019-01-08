@@ -48,13 +48,13 @@ const login = async (parent, args, context, info) => {
 
 const postLink = (parent, { url, description }, context, info) => {
   // Get the logged in user
-  // const userId = getUserId(context);
+  const userId = getUserId(context);
 
   // Create their link
   return context.prisma.createLink({
     url,
     description
-    // postedBy: { connect: { id: userId } }
+    postedBy: { connect: { id: userId } }
   });
 };
 
