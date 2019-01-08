@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 const Header = () => (
   <header className="flex pal justify-between nowrap orange">
     <div className="flex flex-fixed black">
-      <title className="fw7 mr1">Stacker News</title>
+      <div className="fw7 mr1">Stacker News</div>
       <Link to="/" className="ml1 no-underline black">
         new
       </Link>
