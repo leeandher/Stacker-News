@@ -15,6 +15,10 @@ const Header = ({ history }) => {
           new
         </Link>
         <div className="ml1">|</div>
+        <Link to="/search" className="ml1 no-underline black">
+          search
+        </Link>
+        <div className="ml1">|</div>
         <Link to="/create" className="ml1 no-underline black">
           submit
         </Link>
