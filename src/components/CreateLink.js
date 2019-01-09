@@ -50,9 +50,9 @@ class CreateLink extends Component {
           mutation={POST_MUTATION}
           variables={{ description, url }}
           onCompleted={() => this.props.history.push("/")}
-          update={(store, { data: { post } }) => {
+          update={(store, { data: { postLink } }) => {
             const data = store.readQuery({ query: FEED_QUERY });
-            data.feed.links.unshift(post);
+            data.feed.links.unshift(postLink);
             store.writeQuery({
               query: FEED_QUERY,
               data
