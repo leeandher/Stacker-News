@@ -6,6 +6,7 @@ import LinkList from "./LinkList";
 import CreateLink from "./CreateLink";
 import Login from "./Login";
 import Search from "./Search";
+import Lost from "./Lost";
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/search" component={Search} />
             <Route exact path="/top" component={LinkList} />
             <Route exact path="/new/:page" component={LinkList} />
+            <Route exact path="/:other" component={Lost} />
           </Switch>
         </div>
       </main>

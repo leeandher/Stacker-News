@@ -97,7 +97,15 @@ class LinkList extends Component {
   // Auto update the your own votes live
   _updateCacheAfterVote = (store, createVote, linkId) => {
     // Read the cached data for FEED_QUERY from the store
-    const data = store.readQuery({ query: FEED_QUERY });
+    const { first, skip, orderBy } = this.state;
+    const data = store.readQuery({
+      query: FEED_QUERY,
+      variables: {
+        first,
+        skip,
+        orderBy
+      }
+    });
 
     // Get the link the user just voted on, and modify the votes on them
     const votedLink = data.feed.links.find(link => link.id === linkId);
