@@ -59,17 +59,7 @@ class CreateLink extends Component {
             });
           }}
         >
-          {postMutation => (
-            <button onClick={postMutation}>
-              <span role="img" aria-label="check">
-                ✅
-              </span>
-              {` Submit `}
-              <span role="img" aria-label="check">
-                ✅
-              </span>
-            </button>
-          )}
+          {postMutation => <button onClick={postMutation}>submit</button>}
         </Mutation>
       </div>
     );
