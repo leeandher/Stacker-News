@@ -6,7 +6,7 @@ const Lost = ({
   }
 }) => (
   <p>
-    Why did you come here? <b>{other}/</b> doesn't exist.
+    Why did you come here? <b>{other}/</b> doesn't exist. Testing
   </p>
 );
 
