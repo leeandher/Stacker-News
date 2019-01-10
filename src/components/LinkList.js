@@ -12,6 +12,7 @@ import { LINKS_PER_PAGE } from "../constants";
 export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
     feed(first: $first, skip: $skip, orderBy: $orderBy) {
+      count
       links {
         id
         createdAt
@@ -61,7 +62,8 @@ const NEW_VOTES_SUBSCRIPTION = gql`
         id
         url
         description
-        createdAtpostedBy {
+        createdAt
+        postedBy {
           id
           name
         }
@@ -80,6 +82,18 @@ const NEW_VOTES_SUBSCRIPTION = gql`
 `;
 
 class LinkList extends Component {
+  state = {
+    isNewPage: this.props.location.pathname.includes("new"),
+    page: parseInt(this.props.match.params.page),
+    skip: 0,
+    first: 100,
+    orderBy: null
+  };
+
+  componentDidMount() {
+    this._generatePage(this.state.page);
+  }
+
   // Auto update the your own votes live
   _updateCacheAfterVote = (store, createVote, linkId) => {
     // Read the cached data for FEED_QUERY from the store
@@ -119,20 +133,48 @@ class LinkList extends Component {
     });
   };
 
-  // Implementing pagination
-  _getQueryVariables = () => {
-    const isNewPage = this.props.location.pathname.includes("new");
-    const page = parseInt(this.props.match.params.page, 10);
+  // Get the links to be rendered as a list
+  _getLinksToRender = data => {
+    // Normal page
+    if (this.state.isNewPage) {
+      return data.feed.links;
+    }
+    // Top page
+    const rankedLinks = data.feed.links.slice();
+    rankedLinks.sort((l1, l2) => l2.votes.length - l1.votes.length);
+    return rankedLinks;
+  };
 
-    const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0;
-    const first = isNewPage ? LINKS_PER_PAGE : 100;
-    const orderBy = isNewPage ? "createdAt_DESC" : null;
-    return { first, skip, orderBy };
+  // Go to the previous page
+  _previousPage = () => {
+    if (this.state.page > 1) {
+      const previousPage = this.state.page - 1;
+      this._generatePage(previousPage);
+    }
+  };
+
+  // Go to the next page
+  _nextPage = data => {
+    if (this.state.page <= data.feed.count / LINKS_PER_PAGE) {
+      const nextPage = this.state.page + 1;
+      this._generatePage(nextPage);
+    }
+  };
+
+  _generatePage = page => {
+    this.props.history.push(`/new/${page}`);
+    this.setState({
+      page,
+      skip: this.state.isNewPage ? (page - 1) * LINKS_PER_PAGE : 0,
+      first: this.state.isNewPage ? LINKS_PER_PAGE : 100,
+      orderBy: this.state.isNewPage ? "createdAt_DESC" : null
+    });
   };
 
   render() {
+    const { isNewPage, page, skip, first, orderBy } = this.state;
     return (
-      <Query query={FEED_QUERY} variables={this._getQueryVariables()}>
+      <Query query={FEED_QUERY} variables={{ skip, first, orderBy }}>
         {({ loading, error, data, subscribeToMore }) => {
           if (loading) {
             return (
@@ -165,17 +207,30 @@ class LinkList extends Component {
           this._subscribeToNewLinks(subscribeToMore);
           this._subscribeToNewVotes(subscribeToMore);
 
+          const linksToRender = this._getLinksToRender(data);
+          const pageIndex = page ? (page - 1) * LINKS_PER_PAGE : 0;
+
           return (
-            <div>
-              {data.feed.links.map((link, i) => (
+            <>
+              {linksToRender.map((link, i) => (
                 <Link
                   key={link.id}
                   link={link}
-                  index={i}
+                  index={i + pageIndex}
                   updateStoreAfterVote={this._updateCacheAfterVote}
                 />
               ))}
-            </div>
+              {isNewPage && (
+                <div className="flex ml4 mv3 gray">
+                  <div className="pointer mr2" onClick={this._previousPage}>
+                    previous
+                  </div>
+                  <div className="pointer" onClick={() => this._nextPage(data)}>
+                    next
+                  </div>
+                </div>
+              )}
+            </>
           );
         }}
       </Query>

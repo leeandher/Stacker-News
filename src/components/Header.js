@@ -9,7 +9,7 @@ const Header = ({ history }) => {
   return (
     <header className="flex pa1 justify-between nowrap orange">
       <div className="flex flex-fixed black">
-        <img src="y18.gif" alt="Stacker News Logo" className="icon" />
+        <img src="/y18.gif" alt="Stacker News Logo" className="icon" />
         <div className="fw7 mr1">Stacker News</div>
         <Link to="/" className="ml1 no-underline black">
           new
