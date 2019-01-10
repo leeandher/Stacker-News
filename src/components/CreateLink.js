@@ -25,7 +25,7 @@ class CreateLink extends Component {
   render() {
     const { description, url } = this.state;
     return (
-      <div>
+      <>
         <div className="flex flex-column mt3">
           <label htmlFor="description">Description:</label>
           <input
@@ -61,7 +61,7 @@ class CreateLink extends Component {
         >
           {postMutation => <button onClick={postMutation}>submit</button>}
         </Mutation>
-      </div>
+      </>
     );
   }
 }
