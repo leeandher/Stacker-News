@@ -11,16 +11,23 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { BrowserRouter } from "react-router-dom";
 
+// Required subscription server imports
+import { split } from "apollo-link";
+import { WebSocketLink } from "apollo-link-ws";
+import { getMainDefinition } from "apollo-utilities";
+
 // Link to GraphQL Context for setting http headers
 import { setContext } from "apollo-link-context";
 import { AUTH_TOKEN } from "./constants";
 
 import * as serviceWorker from "./serviceWorker";
 
+// Connect to GraphQL Server
 const httpLink = createHttpLink({
   uri: "http://localhost:4000"
 });
 
+// Set authentication headers
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN);
   return {
@@ -31,8 +38,34 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Establish the WebSocketLink
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:4000`,
+  options: {
+    reconnect: true,
+    connectionParams: {
+      // Authenticate ws:// connection
+      authToken: localStorage.getItem(AUTH_TOKEN)
+    }
+  }
+});
+
+// Create a split link for both the WebSocket, and Http/Auth
+// 1. param => func : boolean, a test function
+// 2. param => link, if (func() === true) return this link
+// 3. param => link, if (func() === false) return this link
+const link = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === "OperationDefinition" && operation === "subscription";
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
+// Instantiate the ApolloClient
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link,
   cache: new InMemoryCache()
 });
 
