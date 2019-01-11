@@ -51,7 +51,12 @@ class Search extends Component {
             onChange={e => this.setState({ filter: e.target.value })}
             placeholder="search for something"
           />
-          <button onClick={() => this._executeSearch()}>search</button>
+          <button
+            className="pointer button"
+            onClick={() => this._executeSearch()}
+          >
+            search
+          </button>
         </div>
 
         {this.state.links.map((link, i) => (

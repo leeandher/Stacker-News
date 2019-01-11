@@ -1,5 +1,5 @@
 // Set up the environment
-require("dotenv").config({ path: `${__dirname}/../settings.env` });
+require("dotenv").config({ path: `${__dirname}/../settings-dev.env` });
 
 // Import the dependencies
 const { GraphQLServer } = require("graphql-yoga");
@@ -28,4 +28,6 @@ const server = new GraphQLServer({
   context: request => ({ ...request, prisma })
 });
 
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+server.start({ playground: false }, () =>
+  console.log(`Server is running on http://localhost:4000`)
+);

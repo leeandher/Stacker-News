@@ -43,7 +43,7 @@ class Login extends Component {
     const { login, email, password, name } = this.state;
     return (
       <div>
-        <h4 className="mv3">{login ? "Login" : "Sign Up"}</h4>
+        <h4 className="mv3">{login ? "login" : "sign up"}</h4>
         <div className="flex flex-column">
           {!login && (
             <input
@@ -57,13 +57,13 @@ class Login extends Component {
             type="text"
             value={email}
             onChange={e => this.setState({ email: e.target.value })}
-            placeholder="Your email address"
+            placeholder="your 'email address' (any string will work)"
           />
           <input
             type="password"
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
-            placeholder="Choose a safe password"
+            placeholder="choose a safe password"
           />
         </div>
         <div className="flex mt3">

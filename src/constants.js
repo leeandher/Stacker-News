@@ -1,3 +1,4 @@
 // FRONTEND SECRETS
 export const AUTH_TOKEN = "4ur3y350nly";
-export const LINKS_PER_PAGE = 5;
+export const LINKS_PER_PAGE = 15;
+export const GRAPHQL_ENDPOINT = "http://localhost:4000";
