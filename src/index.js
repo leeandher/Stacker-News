@@ -18,13 +18,13 @@ import { getMainDefinition } from "apollo-utilities";
 
 // Link to GraphQL Context for setting http headers
 import { setContext } from "apollo-link-context";
-import { AUTH_TOKEN } from "./constants";
+import { AUTH_TOKEN, GRAPHQL_ENDPOINT } from "./constants";
 
 import * as serviceWorker from "./serviceWorker";
 
 // Connect to GraphQL Server
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000"
+  uri: GRAPHQL_ENDPOINT
 });
 
 // Set authentication headers
@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 
 // Establish the WebSocketLink
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000`,
+  uri: `ws://${GRAPHQL_ENDPOINT}`,
   options: {
     reconnect: true,
     connectionParams: {
