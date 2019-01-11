@@ -7,23 +7,23 @@ import { AUTH_TOKEN } from "../constants";
 const Header = ({ history }) => {
   const authToken = localStorage.getItem(AUTH_TOKEN);
   return (
-    <header className="flex pa1 justify-between nowrap orange">
+    <header className="flex pa1 justify-between nowrap orange head">
       <div className="flex flex-fixed black">
         <img src="/y18.gif" alt="Stacker News Logo" className="icon" />
-        <div className="fw7 mr1">Stacker News</div>
-        <Link to="/" className="ml1 no-underline black">
+        <div className="fw7 mr1 title">Stacker News</div>
+        <Link to="/" className="ml1 no-underline black direct">
           new
         </Link>
-        <div className="ml1">|</div>
-        <Link to="/top" className="ml1 no-underline black">
+        <div className="ml1 split">|</div>
+        <Link to="/top" className="ml1 no-underline black direct">
           top
         </Link>
-        <div className="ml1">|</div>
-        <Link to="/search" className="ml1 no-underline black">
+        <div className="ml1 split">|</div>
+        <Link to="/search" className="ml1 no-underline black direct">
           search
         </Link>
-        <div className="ml1">|</div>
-        <Link to="/create" className="ml1 no-underline black">
+        <div className="ml1 split">|</div>
+        <Link to="/create" className="ml1 no-underline black direct">
           submit
         </Link>
       </div>
@@ -33,13 +33,13 @@ const Header = ({ history }) => {
             className="ml1 pointer black"
             onClick={() => {
               localStorage.removeItem(AUTH_TOKEN);
-              history.push("/..");
+              history.push("/new/1");
             }}
           >
             logout
           </div>
         ) : (
-          <Link to="/login" className="ml1 no-underline black">
+          <Link to="/login" className="ml1 no-underline black direct">
             login
           </Link>
         )}

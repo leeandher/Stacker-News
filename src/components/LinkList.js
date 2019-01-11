@@ -186,7 +186,7 @@ class LinkList extends Component {
         {({ loading, error, data, subscribeToMore }) => {
           if (loading) {
             return (
-              <div>
+              <div className="indicator">
                 <span role="img" aria-label="flexing">
                   💪
                 </span>
@@ -200,7 +200,7 @@ class LinkList extends Component {
           if (error) {
             console.error(error);
             return (
-              <div>
+              <div className="indicator">
                 <span role="img" aria-label="nope">
                   ❌
                 </span>

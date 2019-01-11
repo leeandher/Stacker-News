@@ -26,6 +26,9 @@ const VOTE_MUTATION = gql`
 
 class Link extends Component {
   render() {
+    const actualLink = /^http(|s):\/\//.test(this.props.link.url)
+      ? this.props.link.url
+      : `http://${this.props.link.url}`;
     const authToken = localStorage.getItem(AUTH_TOKEN);
     return (
       <div className="flex mt2 items-start">
@@ -48,9 +51,16 @@ class Link extends Component {
           )}
         </div>
         <div className="ml1">
-          <div>
-            {this.props.link.description} ({this.props.link.url})
-          </div>
+          <a
+            className="link"
+            href={actualLink}
+            title={this.props.link.description}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {this.props.link.description}{" "}
+            <span className="url gray">({this.props.link.url})</span>
+          </a>
           <div className="f6 lh-copy gray">
             {this.props.link.votes.length} votes | by{" "}
             {this.props.link.postedBy

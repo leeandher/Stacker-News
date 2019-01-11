@@ -1,3 +1,7 @@
+html {
+  font-size: 10px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +10,11 @@ body {
 
 input {
   max-width: 500px;
+  margin: 2px;
+  font-family: monospace;
+  padding: 3px;
+  border: 1px solid gray;
+  font-size: 1.2rem;
 }
 
 .icon {
@@ -18,6 +27,7 @@ input {
 
 .gray {
   color: #828282;
+  font-size: 1.2rem;
 }
 
 .orange {
@@ -29,23 +39,65 @@ input {
 }
 
 .f11 {
-  font-size: 11px;
-}
-
-.w85 {
-  width: 85%;
+  font-size: 10px;
 }
 
 .button {
   font-family: monospace;
-  font-size: 10pt;
   color: black;
   background-color: buttonface;
   text-align: center;
   padding: 2px 6px 3px;
-  border: 1px solid white;
+  border: 1px solid #828282;
   cursor: pointer;
   max-width: 250px;
-  border: 1px solid white;
 }
-border: 1px solid white;
+
+/* Custom */
+.title {
+  margin: 2.5px;
+  margin-right: 10px;
+}
+
+.direct {
+  margin: 2.5px 5px;
+}
+.split {
+  margin-top: 2.5px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.url {
+  font-size: 1rem;
+}
+.indicator {
+  font-family: monospace;
+  font-size: 1.4rem;
+  margin: 8px;
+}
+.indicator span {
+  margin: 20px;
+}
+
+div,
+p {
+  font-size: 1.3rem;
+}
+
+footer {
+  margin: 10px;
+  font-style: italic;
+}
+
+@media (min-width: 750px) {
+  .basis {
+    width: 82.5%;
+  }
+  .head {
+    margin-top: 8px;
+  }
+}

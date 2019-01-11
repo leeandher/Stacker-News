@@ -11,7 +11,7 @@ import Lost from "./Lost";
 class App extends Component {
   render() {
     return (
-      <main className="center w85">
+      <main className="center basis">
         <Header />
         <div className="ph3 pv1 background-gray">
           <Switch>
@@ -24,6 +24,10 @@ class App extends Component {
             <Route exact path="/:other" component={Lost} />
           </Switch>
         </div>
+        <footer>
+          Lovingly based on:{" "}
+          <a href="https://news.ycombinator.com">HackerNews</a>
+        </footer>
       </main>
     );
   }
