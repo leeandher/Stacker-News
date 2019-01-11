@@ -89,6 +89,9 @@ input {
 .pointer {
   margin: 0 30px 10px 2px;
 }
+.click:hover {
+  cursor: pointer;
+}
 
 div,
 p {
