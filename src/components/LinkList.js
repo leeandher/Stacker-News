@@ -84,7 +84,7 @@ const NEW_VOTES_SUBSCRIPTION = gql`
 class LinkList extends Component {
   state = {
     isNewPage: this.props.location.pathname.includes("new"),
-    page: parseInt(this.props.match.params.page),
+    page: parseInt(this.props.match.params.page) || 1,
     skip: 0,
     first: 100,
     orderBy: null
@@ -207,6 +207,19 @@ class LinkList extends Component {
                 An error has occured!
                 <span role="img" aria-label="nope">
                   ❌
+                </span>
+              </div>
+            );
+          }
+          if (data.feed.links.length === 0) {
+            return (
+              <div className="indicator">
+                <span role="img" aria-label="nope">
+                  😵
+                </span>
+                Nothing! Try lowering that page number a bit eh?
+                <span role="img" aria-label="nope">
+                  😵
                 </span>
               </div>
             );
