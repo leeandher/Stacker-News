@@ -51,34 +51,39 @@ class CreateLink extends Component {
     const { description, url } = this.state;
     return (
       <>
+        <h4 className="mv3">submit</h4>
         <div className="flex flex-column mt3">
-          <label htmlFor="description">Description:</label>
           <input
             type="text"
             name="description"
-            className="mb2"
             value={description}
             onChange={e => this.setState({ description: e.target.value })}
-            placeholder="A description for the link"
+            placeholder="description"
+            autoComplete="off"
           />
-          <label htmlFor="url">URL:</label>
           <input
             type="text"
             name="url"
-            className="mb2"
             value={url}
             onChange={e => this.setState({ url: e.target.value })}
-            placeholder="The URL for the link"
+            placeholder="url"
+            autoComplete="off"
           />
         </div>
-        <Mutation
-          mutation={POST_MUTATION}
-          variables={{ description, url }}
-          onCompleted={() => this.props.history.push("/new/1")}
-          update={this._handleUpdate}
-        >
-          {postMutation => <button onClick={postMutation}>submit</button>}
-        </Mutation>
+        <div className="flex mt3">
+          <Mutation
+            mutation={POST_MUTATION}
+            variables={{ description, url }}
+            onCompleted={() => this.props.history.push("/new/1")}
+            update={this._handleUpdate}
+          >
+            {postMutation => (
+              <button className="pointer button" onClick={postMutation}>
+                submit
+              </button>
+            )}
+          </Mutation>
+        </div>
       </>
     );
   }

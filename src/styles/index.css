@@ -74,6 +74,7 @@ input {
 .url {
   font-size: 1rem;
 }
+
 .indicator {
   font-family: monospace;
   font-size: 1.4rem;
@@ -81,6 +82,12 @@ input {
 }
 .indicator span {
   margin: 20px;
+}
+.pagination {
+  text-align: center;
+}
+.pointer {
+  margin: 0 30px 10px 2px;
 }
 
 div,
