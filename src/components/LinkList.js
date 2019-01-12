@@ -144,7 +144,7 @@ class LinkList extends Component {
   // Get the links to be rendered as a list
   _getLinksToRender = data => {
     // Normal page
-    if (this.state.isNewPage) {
+    if (this.props.location.pathname.includes("new")) {
       return data.feed.links;
     }
     // Top page
