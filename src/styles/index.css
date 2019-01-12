@@ -93,6 +93,11 @@ input {
   cursor: pointer;
 }
 
+.logout {
+  margin: 2px 10px;
+  cursor: pointer;
+}
+
 div,
 p {
   font-size: 1.3rem;

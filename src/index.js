@@ -24,7 +24,7 @@ import * as serviceWorker from "./serviceWorker";
 
 // Connect to GraphQL Server
 const httpLink = createHttpLink({
-  uri: GRAPHQL_ENDPOINT
+  uri: `http://${GRAPHQL_ENDPOINT}`
 });
 
 // Set authentication headers
