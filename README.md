@@ -25,7 +25,7 @@ That's pretty much it, it's a pretty simple app. The cooler part is the **STACK*
 ## How it Works
 
 This app was made with a pretty modern, 2018/19 stack. Let's start with the backend. The database is actually a demo server hosted by [Prisma](prisma), which uses their Prisma Client to interact with it. The reason for Prisma? Well their baked-in GraphQL support of course! Next, there's the server, which is generated through `graphql-yoga`, the choice GraphQL library based on
-Express.js. The resolvers, schema, datamodel and relations are all specified by yours truly.
+Express.js. The resolvers, schema, data model and relations are all specified by yours truly.
 
 The frontend was written using React (of course). In order to interact with the GraphQL API, an `ApolloClient` was used to handle caching, requests, queries, mutations and subscriptions. In addition, JWTs were used for authentication, but since it's just a demo, they're stored in cache.
 
@@ -40,4 +40,4 @@ What I'd like to call, the **GARP** stack <small>(that better catch on)</small>
 
 ## Creds
 
-This app was made possible in large part due to the helpful tutorials over at [howtographql.com](http://howtographql.com). By following their backend tutorial, I was able to create the server, and endpoint. Their frontend tutorial recommened downloading the finished server, but since I had it, I was able to write 100% of the code for the app! While I did refactor, add, and style quite a bit extra, the tutorial was a great entrance into the world of GraphQL!
+This app was made possible in large part due to the helpful tutorials over at [howtographql.com](http://howtographql.com). By following their backend tutorial, I was able to create the server, and endpoint. Their frontend tutorial recommend downloading the finished server, but since I had it, I was able to write 100% of the code for the app! While I did refactor, add, and style quite a bit extra, the tutorial was a great entrance into the world of GraphQL!
