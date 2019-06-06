@@ -1,33 +1,33 @@
-function timeDifference(current, previous) {
-  const milliSecondsPerMinute = 60 * 1000;
-  const milliSecondsPerHour = milliSecondsPerMinute * 60;
-  const milliSecondsPerDay = milliSecondsPerHour * 24;
-  const milliSecondsPerMonth = milliSecondsPerDay * 30;
-  const milliSecondsPerYear = milliSecondsPerDay * 365;
+// Get packages
+const jwt = require("jsonwebtoken");
 
-  const elapsed = current - previous;
-
-  if (elapsed < milliSecondsPerMinute / 3) {
-    return "just now";
+// Return the userId in the Authentication header if present
+const getUserId = context => {
+  const Authorization = context.request.get("Authorization");
+  if (Authorization) {
+    const token = Authorization.replace("Bearer ", "");
+    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    return userId;
   }
+  throw new Error("Not authenticated");
+};
 
-  if (elapsed < milliSecondsPerMinute) {
-    return "less than 1 min ago";
-  } else if (elapsed < milliSecondsPerHour) {
-    return Math.round(elapsed / milliSecondsPerMinute) + " minutes ago";
-  } else if (elapsed < milliSecondsPerDay) {
-    return Math.round(elapsed / milliSecondsPerHour) + " hours ago";
-  } else if (elapsed < milliSecondsPerMonth) {
-    return Math.round(elapsed / milliSecondsPerDay) + " days ago";
-  } else if (elapsed < milliSecondsPerYear) {
-    return Math.round(elapsed / milliSecondsPerMonth) + " months ago";
-  } else {
-    return Math.round(elapsed / milliSecondsPerYear) + " years ago";
-  }
-}
+// Return the userId only  if they posted the supplied Link
+const ensureLinkPoster = async (context, linkId) => {
+  const userId = getUserId(context);
 
-export function timeDifferenceForDate(date) {
-  const now = new Date().getTime();
-  const updated = new Date(date).getTime();
-  return timeDifference(now, updated);
-}
+  // Ensure the user posted this link
+  const linkExists = await context.prisma.$exists.link({
+    id: linkId,
+    postedBy: { id: userId }
+  });
+
+  if (linkExists) return true;
+
+  throw new Error("User does not own this link");
+};
+
+module.exports = {
+  getUserId,
+  ensureLinkPoster
+};
