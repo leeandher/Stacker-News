@@ -24,7 +24,7 @@ import * as serviceWorker from './serviceWorker'
 
 // Connect to GraphQL Server
 const httpsLink = createHttpLink({
-  uri: `http://${GRAPHQL_ENDPOINT}` // or https:// when deploying
+  uri: `https://${GRAPHQL_ENDPOINT}` // or https:// when deploying
 })
 
 // Set authentication headers
@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 
 // Establish the WebSocketLink
 const wssLink = new WebSocketLink({
-  uri: `ws://${GRAPHQL_ENDPOINT}`, // or wss:// when deploying
+  uri: `wss://${GRAPHQL_ENDPOINT}`, // or wss:// when deploying
   options: {
     reconnect: true,
     connectionParams: {
